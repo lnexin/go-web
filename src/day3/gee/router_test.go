@@ -33,13 +33,13 @@ func TestGetRoute(t *testing.T) {
 		t.Fatal("nil should not be return")
 	}
 
-	if n.pattern != "/hello/:name" {
+	if n.Pattern != "/hello/:name" {
 		t.Fatal("should match /hello/:name")
 	}
 
 	if ps["name"] != "geeeee" {
 		t.Fatal("name should not be equal to 'geeeee'")
 	}
-	fmt.Println("match path: %s, params[name]: %s\n", n.pattern, ps["name"])
+	fmt.Println("match path: %s, params[name]: %s\n", n.Pattern, ps["name"])
 
 }

@@ -16,11 +16,21 @@ func main() {
 	})
 
 	r.GET("/hello/:name", func(context *gee.Context) {
-
-		context.String(200, "hello %s, you param[name] is %s, path: %s\n", context.Param("name"), context.Param("name"), context.Path)
-
+		context.String(200, "1hello %s, you param[name] is %s, path: %s\n", context.Param("name"), context.Param("name"), context.Path)
+	})
+	r.GET("/hello/:name/c", func(context *gee.Context) {
+		context.String(200, "2hello %s, you param[name] is %s, path: %s\n", context.Param("name"), context.Param("name"), context.Path)
+	})
+	r.GET("/hello/b/c", func(context *gee.Context) {
+		context.String(200, "3hello %s, you param[name] is %s, path: %s\n", context.Param("name"), context.Param("name"), context.Path)
 	})
 
+	r.GET("/hello/d/c", func(context *gee.Context) {
+		context.String(200, "3hello %s, you param[name] is %s, path: %s\n", context.Param("name"), context.Param("name"), context.Path)
+	})
+	r.GET("/hello/d/e", func(context *gee.Context) {
+		context.String(200, "3hello %s, you param[name] is %s, path: %s\n", context.Param("name"), context.Param("name"), context.Path)
+	})
 	r.GET("/assert/*filepath", func(context *gee.Context) {
 		context.JSON(200, gee.HM{"filepath": context.Param("filepath")})
 	})

@@ -54,11 +54,11 @@ func (r *Router) addRoute(method string, pattern string, handler HandlerFunc) {
 	if !ok {
 		r.Roots[method] = &Node{}
 	}
+	r.Roots[method].insert(pattern, parts, 0)
+	r.Handlers[key] = handler
 	fmt.Println("----------------------------")
 	fmt.Println("method: ", method, "pattern: ", pattern)
 	fmt.Println("----------------------------")
-	r.Roots[method].insert(pattern, parts, 0)
-	r.Handlers[key] = handler
 	PrintTree(r)
 	fmt.Println("====================================")
 	//log.Println("====================================")

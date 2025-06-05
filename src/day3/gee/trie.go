@@ -2,17 +2,17 @@ package gee
 
 import "strings"
 
-type node struct {
-	pattern  string
-	children []*node
-	part     string
-	isWild   bool
+type Node struct {
+	Pattern  string  `json:"Pattern"`
+	Children []*Node `json:"Children"`
+	Part     string  `json:"Part"`
+	IsWild   bool    `json:"IsWild"`
 }
 
 // 第一个匹配的子节点
-func (n *node) matchFirstChild(part string) *node {
-	for _, child := range n.children {
-		if child.part == part || child.isWild {
+func (n *Node) matchFirstChild(part string) *Node {
+	for _, child := range n.Children {
+		if child.Part == part || child.IsWild {
 			return child
 		}
 
@@ -21,34 +21,34 @@ func (n *node) matchFirstChild(part string) *node {
 }
 
 // 所有匹配的子节点
-func (n *node) matchChildren(part string) []*node {
-	rlts := make([]*node, 0)
-	for _, child := range n.children {
-		if child.part == part || child.isWild {
+func (n *Node) matchChildren(part string) []*Node {
+	rlts := make([]*Node, 0)
+	for _, child := range n.Children {
+		if child.Part == part || child.IsWild {
 			rlts = append(rlts, child)
 		}
 	}
 	return rlts
 }
 
-func (n *node) insert(pattern string, parts []string, height int) {
+func (n *Node) insert(pattern string, parts []string, height int) {
 	if len(parts) == height {
-		n.pattern = pattern
+		n.Pattern = pattern
 		return
 	}
 
 	part := parts[height]
 	child := n.matchFirstChild(part)
 	if child == nil {
-		child = &node{part: part, isWild: part[0] == '*' || part[0] == ':'}
-		n.children = append(n.children, child)
+		child = &Node{Part: part, IsWild: part[0] == '*' || part[0] == ':'}
+		n.Children = append(n.Children, child)
 	}
 	child.insert(pattern, parts, height+1)
 }
 
-func (n *node) search(parts []string, height int) *node {
-	if len(parts) == height || strings.HasPrefix(n.part, "*") {
-		if n.pattern == "" {
+func (n *Node) search(parts []string, height int) *Node {
+	if len(parts) == height || strings.HasPrefix(n.Part, "*") {
+		if n.Pattern == "" {
 			return nil
 		}
 		return n
