@@ -24,6 +24,6 @@ func main() {
 	r.GET("/assert/*filepath", func(context *gee.Context) {
 		context.JSON(200, gee.HM{"filepath": context.Param("filepath")})
 	})
-	r.Run(":9090")
+	r.Run(":8080")
 
 }
